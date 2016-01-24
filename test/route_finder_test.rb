@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'rack_router/route_finder'
+require 'roles/route_matcher'
 
 class MatchesRequestDouble
   def matches_request?(request)
@@ -44,3 +45,20 @@ class TestRouteFinder < MiniTest::Unit::TestCase
     {}
   end
 end
+
+class TestMatchesRequestDouble < MiniTest::Unit::TestCase
+  include RouteMatcherTest
+
+  def setup
+    @sut = MatchesRequestDouble.new
+  end
+end
+
+class TestNotMatchesRequestDouble < MiniTest::Unit::TestCase
+  include RouteMatcherTest
+
+  def setup
+    @sut = NotMatchesRequestDouble.new
+  end
+end
+
