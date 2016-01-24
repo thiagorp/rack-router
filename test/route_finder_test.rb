@@ -36,7 +36,7 @@ class TestRouteFinder < MiniTest::Unit::TestCase
         .new(routes: [route_1])
         .route_for(request)
 
-    assert_equal matched, nil
+    assert_nil matched
   end
 
   private
