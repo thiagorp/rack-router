@@ -1,29 +1,21 @@
 class Route
   attr_reader :method,
-              :path,
-              :matchers_chain
+              :path
 
   def initialize(args)
     @method = args[:method]
     @path = args[:path]
-    @matchers_chain = build_chain(chain_objs)
   end
 
   def matches_request?(request)
-    matchers_chain.run_chain(request)
+    matchers.all? do |matcher|
+      matcher.matches_request?(request)
+    end
   end
 
   private
 
-  def build_chain(objs)
-    objs[0..-2].each_with_index do |obj, index|
-      obj.next_obj = objs[index+1]
-    end
-
-    objs.first
-  end
-
-  def chain_objs
+  def matchers
     [
       path_matcher,
       MethodMatcher.new(method)
@@ -40,25 +32,7 @@ class Route
 
 
 
-  module MatcherChainOfResponsibility
-    attr_accessor :next_obj
-
-    def run_chain(request)
-      matches_request?(request) && call_next(request)
-    end
-
-    def call_next(request)
-      if next_obj.nil?
-        true
-      else
-        next_obj.run_chain(request)
-      end
-    end
-  end
-
   class ExactPathMatcher
-    include MatcherChainOfResponsibility
-
     def initialize(path)
       @path = path
     end
@@ -79,8 +53,6 @@ class Route
   end
 
   class ParameterizedPathMatcher
-    include MatcherChainOfResponsibility
-
     PARAMS_FINDER_REGEXP = /(:[^\/]+)/.freeze
     PARAMS_REPLACEMENT_REGEXP = '[^\/]+'.freeze
 
@@ -112,8 +84,6 @@ class Route
   end
 
   class MethodMatcher
-    include MatcherChainOfResponsibility
-
     def initialize(method)
       @method = method
     end
