@@ -22,6 +22,7 @@ DEPENDENCIES
   minitest (~> 5.8.3)
   rack (~> 1.6.4)
   rake
+  simplecov
 
 BUNDLED WITH
    1.11.2
