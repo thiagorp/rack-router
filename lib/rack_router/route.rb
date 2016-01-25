@@ -17,42 +17,14 @@ class Route
 
   def matchers
     [
-      path_matcher,
+      PathMatcher.new(path),
       MethodMatcher.new(method)
     ]
   end
 
-  def path_matcher
-    if ParameterizedPathMatcher.is_path_parameterized?(path)
-      ParameterizedPathMatcher.new(path)
-    else
-      ExactPathMatcher.new(path)
-    end
-  end
 
 
-
-  class ExactPathMatcher
-    def initialize(path)
-      @path = path
-    end
-
-    def matches_request?(request)
-      prepare(request.path) == @path
-    end
-
-    private
-
-    def prepare(path)
-      if path[-1] == '/'
-        path[0..-2] 
-      else
-        path
-      end
-    end
-  end
-
-  class ParameterizedPathMatcher
+  class PathMatcher
     PARAMS_FINDER_REGEXP = /(:[^\/]+)/.freeze
     PARAMS_REPLACEMENT_REGEXP = '[^\/]+'.freeze
 
@@ -62,10 +34,6 @@ class Route
 
     def matches_request?(request)
       @path_regexp.match(prepare(request.path))
-    end
-
-    def self.is_path_parameterized?(route)
-      PARAMS_FINDER_REGEXP.match(route)
     end
 
     private
