@@ -3,6 +3,7 @@ GEM
   specs:
     minitest (5.8.3)
     rack (1.6.4)
+    rake (10.4.2)
 
 PLATFORMS
   ruby
@@ -10,6 +11,7 @@ PLATFORMS
 DEPENDENCIES
   minitest (~> 5.8.3)
   rack (~> 1.6.4)
+  rake
 
 BUNDLED WITH
    1.11.2
