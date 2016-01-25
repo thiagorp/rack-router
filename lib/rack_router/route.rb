@@ -51,7 +51,7 @@ class Route
       if next_obj.nil?
         true
       else
-        next_obj.matches_request?(request)
+        next_obj.run_chain(request)
       end
     end
   end
