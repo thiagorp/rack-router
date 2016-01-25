@@ -14,7 +14,7 @@ class NotMatchesRequestDouble
   end
 end
 
-class TestRouteFinder < MiniTest::Unit::TestCase
+class TestRouteFinder < MiniTest::Test
   def test_it_returns_the_first_matched_route
     route_1 = NotMatchesRequestDouble.new
     route_2 = MatchesRequestDouble.new
@@ -46,7 +46,7 @@ class TestRouteFinder < MiniTest::Unit::TestCase
   end
 end
 
-class TestMatchesRequestDouble < MiniTest::Unit::TestCase
+class TestMatchesRequestDouble < MiniTest::Test
   include RouteMatcherTest
 
   def setup
@@ -54,7 +54,7 @@ class TestMatchesRequestDouble < MiniTest::Unit::TestCase
   end
 end
 
-class TestNotMatchesRequestDouble < MiniTest::Unit::TestCase
+class TestNotMatchesRequestDouble < MiniTest::Test
   include RouteMatcherTest
 
   def setup

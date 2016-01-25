@@ -17,7 +17,7 @@ class RequestDouble
   end
 end
 
-class TestRoute < MiniTest::Unit::TestCase
+class TestRoute < MiniTest::Test
   include RouteMatcherTest
 
   def setup
